@@ -1,0 +1,84 @@
+*{
+	margin:0;
+	padding:0;
+}
+html{
+	width: 100%;
+	height: 100%;
+}
+tr{
+	height: 3.5rem;
+	line-height: 3.5rem;
+}
+td{
+	text-overflow:ellipsis; 
+	overflow:hidden; 
+	white-space: nowrap; 
+}
+.main-title{
+	display: inline-block;
+	width: 100%;
+	height: 4rem;
+	line-height: 4rem;
+	border-bottom: 1px solid #EEEEEE;
+	font-size: 17px;
+}
+form{
+	width: 70%;
+}
+table{
+	margin-top: 2rem;
+}
+td{
+	color:#666666;
+}
+input{
+	border: none;
+	outline: none;
+}
+input[type='text']{
+	display: inline-block;
+	margin-left: 1.3rem;
+	background: none;
+	height: 3.5rem;
+	line-height: 3.5rem;
+}
+select{
+	border:none;
+	outline: none;
+	display:inline-block;
+	padding-left: 1rem;
+	width: 100%;
+	height: 3.5rem;
+	background: none;
+	line-height: 3.5rem;
+}
+.td-txt{
+	display: inline-block;
+	margin-right: 1.5rem;
+}
+#main-tip{
+	display: none;
+	color: red;
+	font-size: 16px;
+	margin-top: 1rem;
+}
+.fr{
+	margin-top: 1.5rem;
+	float: right;
+}
+.bui_select{
+	display: inline-block;
+}
+.search_select{
+	width: 15rem;
+}
+.search_txt{
+	display: inline-block;
+	margin-right: 2rem;
+}
+thead{
+	color: #666666;
+	background-color: #F7F7F7;
+	border-bottom: 1px solid #EEEEEE;
+}
