@@ -195,7 +195,6 @@ input::-webkit-input-placeholder {
     left:1%;
 }
 .empty_txt{
-    display: none;
     color: white;
     font-size: 18px;
     line-height: 3.5rem;
@@ -238,7 +237,6 @@ input::-webkit-input-placeholder {
     overflow-y: scroll;
 }
 .shopcar_empty{
-    display: none;
 }
 .shopcar_empty_img{
     width: 9rem;
