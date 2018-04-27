@@ -356,9 +356,10 @@ input::-webkit-input-placeholder {
     margin-bottom: 6rem;
 }
 .right_about,.logout,.right_details{
-    text-decoration: none;
     font-size: 15px;
     color: white;
     line-height: 3.5rem;
     margin-left: 2rem;
+    cursor: pointer;
+    display: inline-block;
 }

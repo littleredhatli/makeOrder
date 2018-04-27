@@ -21,18 +21,18 @@
     <div class="underline"></div>
     <div class="login_form">
         <form class="login_form_content" action="login_check.php" method="post">
-            <span class="login_form_txt" style="margin-top: 10%;">用户名：</span><input class="login_form_input" type="text" name="username" />
-            <span class="login_form_txt">密码：</span><input class="login_form_input" type="password" name="password"/>
+            <span class="login_form_txt" style="margin-top: 10%;">用户名：</span><input class="login_form_input login_user" type="text" name="username" />
+            <span class="login_form_txt">密码：</span><input class="login_form_input login_pass" type="password" name="password"/>
             <button class="login_form_button" style="margin-right: 5%;">快速登录</button>
         </form>
     </div>
     <div class="register_form">
         <form class="register_form_content" action="handle_register.php" method="post">
-            <span class="register_form_txt" style="margin-top: 10%;">用户名：</span><input class="register_form_input" type="text" name="name"/>
-            <span class="register_form_txt">密码：</span><input class="register_form_input" type="password" name="password"/>
+            <span class="register_form_txt" style="margin-top: 10%;">用户名：</span><input class="register_form_input username" type="text" name="name"/>
+            <span class="register_form_txt">密码：</span><input class="register_form_input password" type="password" name="password"/>
             <div class="password_block"></div>
-            <span class="register_form_txt">验证码：</span><input class="register_form_input" type="text" style="margin-top: 3%;" name="number"/>
-            <button class="register_form_button" style="margin-right: 5%;" onclick="registerCheck($('password_block').innerText)">同意并注册</button>
+            <span class="register_form_txt">验证码：</span><input class="register_form_input code" type="text" style="margin-top: 3%;" name="number"/>
+            <button class="register_form_button" style="margin-right: 5%;">同意并注册</button>
         </form>
     </div>
 </div>
@@ -82,10 +82,35 @@
             register.style.color="grey";
             login.style.color="black";
         }
-
-
+        $(".register_form_button").click(function(){
+            var code=$(".password_block").html();
+            var number=$(".code").val();
+            var username=$(".username").val();
+            var password=$(".password").val();
+            if(username=="" || password==""){
+                alert("用户名或密码不能为空！");
+                $(".register_form_content").attr("action","");
+            }
+            if(number!=code){
+                alert("验证码不正确，请重新注册！");
+                $(".register_form_content").attr("action","");
+            }
+            else{
+                $(".register_form_content").attr("action","handle_register.php");
+            }
+        });
+        $(".login_form_content").click(function(){
+            var username=$(".login_user").val();
+            var password=$(".login_pass").val();
+            if(username=="" || password==""){
+                $(".login_form_content").attr("action","");
+            }
+            else{
+                $(".login_form_content").attr("action","login_check.php");
+            }
+        });
         
-    }
+}
     function shownumber(obj)
     {
         obj.innerHTML="";
@@ -98,9 +123,6 @@
             var num="<span class='txt' style='color:"+color+"; font-size: "+size+"px;transform:rotatez("+rotate+"deg);'>"+numtxt+"</span>";
             obj.innerHTML+=num;
         }
-    }
-    function registerCheck(i){
-        window.location="handle_register.php?code="+i;
     }
 </script>
 </body>

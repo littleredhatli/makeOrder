@@ -22,14 +22,14 @@ if (empty($user)) {
     ?>
         <script type="text/javascript">
             alert("用户名或密码不正确，请重新登录！");
-            window.location="login.php";
+            window.location="index.php";
         </script>
         <?php
 } else if($password != $user['passwd']) {
     ?>
         <script type="text/javascript">
             alert("用户名或密码不正确，请重新登录！");
-            window.location="login.php";
+            window.location="index.php";
         </script>
         <?php
 } else if($user['user_grant']=='用户'){

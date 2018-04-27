@@ -4,6 +4,7 @@
         $is_login = 1;
     } else {
         $is_login = 0;
+        die("请先登录！");
     }
     header('Content-Type:text/html; charset=UTF-8');
     $conn = mysqli_connect('localhost', 'root' ,'' , 'makeorder');
@@ -19,9 +20,23 @@
         $rows[]=$row;
     }
 
+    $query="select * from product";
+    $arry=mysqli_query($conn,$query);
+    $searches=[];
+    while ($search=mysqli_fetch_assoc($arry)) {
+        $searches[]=$search;
+    }
     
+    $list1="select name from category order by weight desc limit 1";
+    $show1=mysqli_query($conn,$list1);
+    $result1=mysqli_fetch_assoc($show1);
+    $list2="select * from product where category_name='".$result1['name']."'";
+    $result2=mysqli_query($conn,$list2);
+    $showes=[];
+    while ($show=mysqli_fetch_assoc($result2)) {
+        $showes[]=$show;
+    }
 
-    
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,17 +73,30 @@
     </div>
     <div class="content_center">
         <div class="content_center_header">
-            <div class="search">
-                <input type="text" class="search_block" placeholder="想吃点什么  ..."/>
-                <button class="search_button"><i class="fa fa-search" style="position: absolute;color:#FA9FA6;font-size: 1.2rem;left:12rem;z-index: 1;top:1.1rem;"></i></button>
-            </div>
         </div>
         <div class="content_center_content">
             <div class="center_notice">
                 <span class="notice_content">公告：周一到周五午餐时间，11:00-11:30订 12：15前到~ 催单电话：13598825555</span>
             </div>
             <div class="menu_list1">
-            
+                <?php foreach($showes as $key=>$show):?>
+                <div class="menu_list1_content each-<?=$show['id']?> first_view" id="<?php echo $show['id'];?>">
+                    <div class="menu_list1_content_img"></div>
+                    <p class="menu_list1_name"><?php echo $show['name'];?></p>
+                    <p class="menu_list1_description"><?php echo $show['description'];?></p>
+                    <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $show['price'];?></span>
+                    <div class="menu_list1_addshopcar"></div>
+                </div>
+                <?php  endforeach;?>
+                <?php foreach($searches as $key=>$search):?>
+                <div class="menu_list1_content each-<?=$search['id']?>" id="<?php echo $search['id'];?>" style="display: none;">
+                    <div class="menu_list1_content_img"></div>
+                    <p class="menu_list1_name"><?php echo $search['name'];?></p>
+                    <p class="menu_list1_description"><?php echo $search['description'];?></p>
+                    <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $search['price'];?></span>
+                    <div class="menu_list1_addshopcar"></div>
+                </div>
+                <?php  endforeach;?>
                 
             </div>
         </div>
@@ -76,9 +104,9 @@
     <div class="content_right">
         <div class="content_right_header">
         <?php if($is_login):?>
-            <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></a>
-            <a class="right_details" href="login.php">我的资料</a>
-            <a class="logout" href="logout.php">退出登录</a>
+            <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></span>
+            <a class="right_details">我的资料</a>
+            <a class="logout">退出登录</a>
         <?php endif?>
         </div>
         <div class="content_right_content">
@@ -101,13 +129,15 @@
                     <div class="notempty_txt" style="display: none;">
                         <span class="total">总计： ￥</span>
                         <span class="total_price">0</span>
-                        <button class="calculate">结算</button>
+                        <button class="calculate" onclick="makeorder()">结算</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <script type="text/javascript">
 window.onload=function(){
     var data;
@@ -133,7 +163,9 @@ window.onload=function(){
         }
     }
 
+
     $(".content_list").click(function(){
+        $(".first_view").remove();
         var thisID=$(this).children(".category_index").html();
         data={id:thisID};
         post_ajax("handle_menu.php", data, sucess_function);                   
@@ -197,16 +229,16 @@ window.onload=function(){
 
             quantity = parseInt(quantity)+parseInt(1);
             
-            var total = parseInt(itemprice)*parseInt(quantity);
+            var total = parseFloat(itemprice)*parseFloat(quantity);
             
             
             $('#each-'+thisID).children(".onelist_price").html(total);
             $('#each-'+thisID).children(".num").html(quantity);
             
             var prev_charges = $('.total_price').html();
-            prev_charges = parseInt(prev_charges)-parseInt(price);
+            prev_charges = parseFloat(prev_charges)-parseFloat(price);
             
-            prev_charges = parseInt(prev_charges)+parseInt(total);
+            prev_charges = parseFloat(prev_charges)+parseFloat(total);
             $('.total_price').html(prev_charges);
             
         }
@@ -215,7 +247,7 @@ window.onload=function(){
             Arrays.push(thisID);
             
             var prev_charges = $('.total_price').html();
-            prev_charges = parseInt(prev_charges)+parseInt(itemprice);
+            prev_charges = parseFloat(prev_charges)+parseFloat(itemprice);
             
             $('.total_price').html(prev_charges);
             
@@ -226,7 +258,7 @@ window.onload=function(){
     $(document).on('click','.plus',function(){
         var thisID=$(this).parent(".shopcar_onelist").attr("id");
         var txt=$('#'+thisID).children(".num").html();
-        txt=parseFloat(txt)+parseFloat(1);
+        txt=parseInt(txt)+parseInt(1);
         $('#'+thisID).children(".num").html(txt);
 
         var list=$("."+thisID).children(".menu_list1_price").html();
@@ -256,15 +288,16 @@ window.onload=function(){
         }
         $('#'+thisID).children(".num").html(txt);
 
-        var total = parseInt(txt)*parseInt(list);
+        var total = parseFloat(txt)*parseFloat(list);
         $('#'+thisID).children(".onelist_price").html(total);
         var prev_charges = $('.total_price').html();
-        prev_charges = parseInt(prev_charges)-parseInt(price);
+        prev_charges = parseFloat(prev_charges)-parseFloat(price);
             
-        prev_charges = parseInt(prev_charges)+parseInt(total);
+        prev_charges = parseFloat(prev_charges)+parseFloat(total);
         $('.total_price').html(prev_charges);
 
     });
+
 }
 
 
@@ -275,11 +308,15 @@ window.onload=function(){
     }
     function sucess_function(ret){
         ret=JSON.parse(ret);
-        var str="";
+        $(".menu_list1_content").css('display','none');
         for(var i=0;i<getJsonLength(ret);i++){
-            str += '<div class="menu_list1_content each-'+ret[i].id+'" id="'+ret[i].id+'"><div class="menu_list1_content_img"></div><p class="menu_list1_name">'+ret[i].name+'</p><p class="menu_list1_description">'+ret[i].description+'</p><span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price">'+ret[i].price+'</span><div class="menu_list1_addshopcar"></div></div>';
+            $("#"+ret[i].id).css('display','inline-block');
+            
         }
-        $(".menu_list1").html(str);
+        
+    }
+    function makeorder(){
+        window.location="add_mess.php";
     }
 </script>
 </body>

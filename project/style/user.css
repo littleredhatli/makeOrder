@@ -1,0 +1,53 @@
+*{
+	margin:0;
+	padding:0;
+}
+html{
+	width: 100%;
+	height: 100%;
+}
+tr{
+	height: 3.5rem;
+	line-height: 3.5rem;
+}
+td{
+	text-overflow:ellipsis; 
+	overflow:hidden; 
+	white-space: nowrap; 
+	text-align: center;
+}
+.main-title{
+	display: inline-block;
+	margin-left: 2rem;
+	width: 100%;
+	height: 4rem;
+	line-height: 4rem;
+	border-bottom: 1px solid #EEEEEE;
+	font-size: 17px;
+}
+form{
+	width: 70%;
+}
+table{
+	margin-top: 2rem;
+}
+td{
+	color:#666666;
+}
+input{
+	border: none;
+	outline: none;
+}
+input[type='text']{
+	display: inline-block;
+	margin-left: 1.3rem;
+	background: none;
+	height: 3.5rem;
+	line-height: 3.5rem;
+}
+select{
+	width: 100%;
+	height: 100%;
+	outline: none;
+	border:none;
+}
