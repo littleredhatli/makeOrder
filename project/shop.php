@@ -4,6 +4,7 @@
         $is_login = 1;
     } else {
         $is_login = 0;
+        die("请先登录！");
     }
     header('Content-Type:text/html; charset=UTF-8');
     $conn = mysqli_connect('localhost', 'root' ,'' , 'makeorder');
@@ -19,30 +20,23 @@
         $rows[]=$row;
     }
 
-    if(!empty($_GET['id'])){
-        $id=$_GET['id'];
-        $query1="select name from category where id='".$id."'";
-        $arry1=mysqli_query($conn,$query1);
-        $result1=mysqli_fetch_assoc($arry1);
-        $query2="select * from product where category_name='".$result1['name']."'";
-        $arry2=mysqli_query($conn,$query2);
-        $searches=[];
-        while ($search=mysqli_fetch_assoc($arry2)) {
-            $searches[]=$search;
-        }
-    }
-    else if(empty($_GET['id'])){
-        $query1="select name from category order by weight desc limit 1";
-        $arry1=mysqli_query($conn,$query1);
-        $result1=mysqli_fetch_assoc($arry1);
-        $query2="select * from product where category_name='".$result1['name']."'";
-        $arry2=mysqli_query($conn,$query2);
-        $searches=[];
-        while ($search=mysqli_fetch_assoc($arry2)) {
-            $searches[]=$search;
-        }
+    $query="select * from product";
+    $arry=mysqli_query($conn,$query);
+    $searches=[];
+    while ($search=mysqli_fetch_assoc($arry)) {
+        $searches[]=$search;
     }
     
+    $list1="select name from category order by weight desc limit 1";
+    $show1=mysqli_query($conn,$list1);
+    $result1=mysqli_fetch_assoc($show1);
+    $list2="select * from product where category_name='".$result1['name']."'";
+    $result2=mysqli_query($conn,$list2);
+    $showes=[];
+    while ($show=mysqli_fetch_assoc($result2)) {
+        $showes[]=$show;
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,10 +47,12 @@
     <script src="./js/jquery-3.0.0.js"></script>
     <script src="./js/jquery.fly.min.js"></script>
     <script src="./ajax/Ajax.js"></script>
+    <script src="./ajax/Json.js"></script>
+    <script src="./js/json2.js"></script>
     <title>某某餐饮有限公司</title>
 </head>
 <body>
-<div class="header"></div>
+
 <div class="content">
     <div class="content_left">
         <div class="content_left_header">
@@ -66,42 +62,41 @@
         <div class="content_leftCon">
             <div class="left_icon" style="margin-bottom: 3rem;"></div>
             <?php  foreach($rows as $key=>$row):?>
-            <!-- <div class="content_list" id="hot" style="background-color: #F63440;color: white;margin-top: 3rem;">
-                <span class="hot">素菜类</span>
-            </div> -->
-            <button class="content_button" onclick="showMenu(<?php echo $row['id'];?>)"><div class="content_list" id="<?php echo $row['id'];?>">
+            <button class="content_button">
+            <div class="content_list">
+                <span class="category_index" style="display: none;"><?php echo $row['id']?></span>
                 <span class="list_name"><?php echo $row['name']?></span>
-            </div></button>
-            <?php endforeach;?>
-            <!-- <div class="content_list" id="noodle">
-                <span class="noodle">面食类</span>
             </div>
-            <div class="content_list" id="drink">
-                <span class="drink">饮品</span>
-            </div> -->
+            </button>
+            <?php endforeach;?>
         </div>
     </div>
     <div class="content_center">
         <div class="content_center_header">
-            <div class="search">
-                <input type="text" class="search_block" placeholder="想吃点什么  ..."/>
-                <button class="search_button"><i class="fa fa-search" style="position: absolute;color:#FA9FA6;font-size: 1.2rem;left:12rem;z-index: 1;top:1.1rem;"></i></button>
-            </div>
         </div>
         <div class="content_center_content">
             <div class="center_notice">
                 <span class="notice_content">公告：周一到周五午餐时间，11:00-11:30订 12：15前到~ 催单电话：13598825555</span>
             </div>
             <div class="menu_list1">
-            <?php foreach($searches as $key=>$search):?>
-                <div class="menu_list1_content each-<?=$search['id']?>" id="<?php echo $search['id'];?>">
+                <?php foreach($showes as $key=>$show):?>
+                <div class="menu_list1_content each-<?=$show['id']?> first_view" id="<?php echo $show['id'];?>">
+                    <div class="menu_list1_content_img"></div>
+                    <p class="menu_list1_name"><?php echo $show['name'];?></p>
+                    <p class="menu_list1_description"><?php echo $show['description'];?></p>
+                    <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $show['price'];?></span>
+                    <div class="menu_list1_addshopcar"></div>
+                </div>
+                <?php  endforeach;?>
+                <?php foreach($searches as $key=>$search):?>
+                <div class="menu_list1_content each-<?=$search['id']?>" id="<?php echo $search['id'];?>" style="display: none;">
                     <div class="menu_list1_content_img"></div>
                     <p class="menu_list1_name"><?php echo $search['name'];?></p>
                     <p class="menu_list1_description"><?php echo $search['description'];?></p>
                     <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $search['price'];?></span>
                     <div class="menu_list1_addshopcar"></div>
                 </div>
-            <?php  endforeach;?>
+                <?php  endforeach;?>
                 
             </div>
         </div>
@@ -109,10 +104,10 @@
     <div class="content_right">
         <div class="content_right_header">
         <?php if($is_login):?>
-            <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></a>
-        <?php endif?>
-            <a class="right_details" href="login.php">我的资料</a>
+            <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></span>
+            <a class="right_details">我的资料</a>
             <a class="logout" href="logout.php">退出登录</a>
+        <?php endif?>
         </div>
         <div class="content_right_content">
             <div class="right_header">
@@ -134,16 +129,18 @@
                     <div class="notempty_txt" style="display: none;">
                         <span class="total">总计： ￥</span>
                         <span class="total_price">0</span>
-                        <button class="calculate">结算</button>
+                        <button class="calculate" onclick="makeorder()">结算</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <script type="text/javascript">
 window.onload=function(){
-
+    var data;
     var Arrays=new Array();
     
 
@@ -154,7 +151,8 @@ window.onload=function(){
 
     var content_list=document.getElementsByClassName("content_list");
     for(var i=0;i<content_list.length;i++){
-        content_list[i].index=i;
+        content_list[0].style.backgroundColor="#F63440";
+        content_list[0].style.color="white";
         content_list[i].onclick=function(){
             for(var j=0;j<content_list.length;j++){
                 content_list[j].style.backgroundColor="#FAFAFA";
@@ -165,11 +163,14 @@ window.onload=function(){
         }
     }
 
-    $(".content_list").click(function(){
-        var thisID=$(".content_list").attr("id");
-        console.log(thisID);
-    })
 
+    $(".content_list").click(function(){
+        $(".first_view").remove();
+        var thisID=$(this).children(".category_index").html();
+        data={id:thisID};
+        post_ajax("handle_menu.php", data, sucess_function);                   
+        
+    });
 
 
     var offset = $('.img_box').offset();  
@@ -183,7 +184,7 @@ window.onload=function(){
         shopcar_notempty.style.display="none";
 
     });
-    $('.menu_list1_addshopcar').click(function (event) {  
+    $(document).on('click','.menu_list1_addshopcar',function(event){
         var thisItem = $(this);  
         var flyer = thisItem.clone();  
         flyer.fly({  
@@ -211,7 +212,7 @@ window.onload=function(){
         });  
     });  
 
-    $('.menu_list1_addshopcar').click(function (){
+    $(document).on('click','.menu_list1_addshopcar',function(){
         empty_txt.style.display="none";
         notempty_txt.style.display="block";
         shopcar_empty.style.display="none";
@@ -226,7 +227,7 @@ window.onload=function(){
             var price    = $('#each-'+thisID).children(".onelist_price").html();
             var quantity = $('#each-'+thisID).children(".num").html();
 
-            quantity = parseFloat(quantity)+parseFloat(1);
+            quantity = parseInt(quantity)+parseInt(1);
             
             var total = parseFloat(itemprice)*parseFloat(quantity);
             
@@ -250,20 +251,14 @@ window.onload=function(){
             
             $('.total_price').html(prev_charges);
             
-            $('.shopcar_notempty').append('<div class="shopcar_onelist" id="each-'+thisID+'"><span class="onelist_name">'+itemname+'</span><button class="minus">-</button><span class="num">1</span><button class="plus">+</button><span style="font-size: 14px;color: #F63440;line-height: 3.5rem;vertical-align: top;margin-left: 1rem;">￥</span><span class="onelist_price">'+itemprice+'</span></div>');           
+            $('.shopcar_notempty').append('<div class="shopcar_onelist" id="each-'+thisID+'" name="'+thisID+'"><span class="onelist_name">'+itemname+'</span><button class="minus">-</button><span class="num">1</span><button class="plus">+</button><span style="font-size: 14px;color: #F63440;line-height: 3.5rem;vertical-align: top;margin-left: 1rem;">￥</span><span class="onelist_price">'+itemprice+'</span></div>');           
         }
-
-       /* $(".plus").click(function(){
-            var txt=$('#each-'+thisID).children(".num").html();
-            txt=parseInt(txt)+parseInt(1);
-            $('#each-'+thisID).children(".num").html(txt);
-        });*/
     });
 
     $(document).on('click','.plus',function(){
         var thisID=$(this).parent(".shopcar_onelist").attr("id");
         var txt=$('#'+thisID).children(".num").html();
-        txt=parseFloat(txt)+parseFloat(1);
+        txt=parseInt(txt)+parseInt(1);
         $('#'+thisID).children(".num").html(txt);
 
         var list=$("."+thisID).children(".menu_list1_price").html();
@@ -284,7 +279,7 @@ window.onload=function(){
         var list=$("."+thisID).children(".menu_list1_price").html();
         var price=$('#'+thisID).children(".onelist_price").html();  
         if(txt!=1){
-            txt=parseFloat(txt)-parseFloat(1);
+            txt=parseInt(txt)-parseInt(1);
         }
         else if(txt==1){
             $(this).parent(".shopcar_onelist").remove();
@@ -293,12 +288,12 @@ window.onload=function(){
         }
         $('#'+thisID).children(".num").html(txt);
 
-        var total = parseInt(txt)*parseInt(list);
+        var total = parseFloat(txt)*parseFloat(list);
         $('#'+thisID).children(".onelist_price").html(total);
         var prev_charges = $('.total_price').html();
-        prev_charges = parseInt(prev_charges)-parseInt(price);
+        prev_charges = parseFloat(prev_charges)-parseFloat(price);
             
-        prev_charges = parseInt(prev_charges)+parseInt(total);
+        prev_charges = parseFloat(prev_charges)+parseFloat(total);
         $('.total_price').html(prev_charges);
 
     });
@@ -306,14 +301,55 @@ window.onload=function(){
 }
 
 
-    function showMenu(id){
-        window.location="shop.php?id="+id;
-        
-    }
     function include(arr, obj) {
         for(var i=0; i<arr.length; i++) {
             if (arr[i] == obj) return true;
         }
+    }
+    function sucess_function(ret){
+        ret=JSON.parse(ret);
+        $(".menu_list1_content").css('display','none');
+        for(var i=0;i<getJsonLength(ret);i++){
+            $("#"+ret[i].id).css('display','inline-block');
+            
+        }
+        
+    }
+    function makeorder(){
+        window.location="add_mess.php";
+        var order=[];
+        var shopcar_onelist=document.getElementsByClassName("shopcar_onelist");
+        var id=[];
+        for (var i = 0; i < shopcar_onelist.length; i++) {
+            id[i]=shopcar_onelist[i].getAttribute('name');
+        }
+        var onelist_name=document.getElementsByClassName("onelist_name");
+        var num=document.getElementsByClassName("num");
+        var onelist_price=document.getElementsByClassName("onelist_price");
+        var total_price=document.getElementsByClassName("total_price")[0];
+        for(var i=0;i<shopcar_onelist.length;i++){
+            order.push({"pro_id":id[i],"pro_name":onelist_name[i].innerHTML,"quantity":num[i].innerHTML,"price":onelist_price[i].innerHTML,"amount":total_price.innerHTML});
+        }
+        var list={orderlist:order};
+        console.log(list);
+        post_ajax("order.php", {orderlist:order}, false);
+        
+        /*var order=[];
+        var orderlist={};
+        var shopcar_onelist=document.getElementsByClassName("shopcar_onelist");
+        var id=[];
+        for (var i = 0; i < shopcar_onelist.length; i++) {
+            id[i]=shopcar_onelist[i].getAttribute('name');
+        }
+        var onelist_name=document.getElementsByClassName("onelist_name");
+        var num=document.getElementsByClassName("num");
+        var onelist_price=document.getElementsByClassName("onelist_price");
+        var total_price=document.getElementsByClassName("total_price")[0];
+        for(var i=0;i<shopcar_onelist.length;i++){
+            order.push({"pro_id":id[i],"pro_name":onelist_name[i].innerHTML,"quantity":num[i].innerHTML,"price":onelist_price[i].innerHTML,"amount":total_price.innerHTML});
+        }
+        orderlist = JSON.stringify(order).replace(/\[|]/g, '');
+        console.log({orderlist:orderlist});*/
     }
 </script>
 </body>

@@ -52,7 +52,7 @@
     <title>某某餐饮有限公司</title>
 </head>
 <body>
-<div class="header"></div>
+
 <div class="content">
     <div class="content_left">
         <div class="content_left_header">
@@ -106,7 +106,7 @@
         <?php if($is_login):?>
             <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></span>
             <a class="right_details">我的资料</a>
-            <a class="logout">退出登录</a>
+            <a class="logout" href="logout.php">退出登录</a>
         <?php endif?>
         </div>
         <div class="content_right_content">
@@ -251,7 +251,7 @@ window.onload=function(){
             
             $('.total_price').html(prev_charges);
             
-            $('.shopcar_notempty').append('<div class="shopcar_onelist" id="each-'+thisID+'"><span class="onelist_name">'+itemname+'</span><button class="minus">-</button><span class="num">1</span><button class="plus">+</button><span style="font-size: 14px;color: #F63440;line-height: 3.5rem;vertical-align: top;margin-left: 1rem;">￥</span><span class="onelist_price">'+itemprice+'</span></div>');           
+            $('.shopcar_notempty').append('<div class="shopcar_onelist" id="each-'+thisID+'" name="'+thisID+'"><span class="onelist_name">'+itemname+'</span><button class="minus">-</button><span class="num">1</span><button class="plus">+</button><span style="font-size: 14px;color: #F63440;line-height: 3.5rem;vertical-align: top;margin-left: 1rem;">￥</span><span class="onelist_price">'+itemprice+'</span></div>');           
         }
     });
 
@@ -315,8 +315,31 @@ window.onload=function(){
         }
         
     }
-    function makeorder(){
+    function makeorder(){   
+        var formData=new FormData();
+        var orderlist={};
         window.location="add_mess.php";
+        var shopcar_onelist=document.getElementsByClassName("shopcar_onelist");
+        var id=[];
+        for (var i = 0; i < shopcar_onelist.length; i++) {
+            id[i]=shopcar_onelist[i].getAttribute('name');
+        }
+        var onelist_name=document.getElementsByClassName("onelist_name");
+        var num=document.getElementsByClassName("num");
+        var onelist_price=document.getElementsByClassName("onelist_price");
+        var total_price=document.getElementsByClassName("total_price")[0];
+        for(var i=0;i<shopcar_onelist.length;i++){
+            var formdata=new FormData();
+            formdata.append('pro_id',id[i]);
+            formdata.append('pro_name',onelist_name[i].innerHTML);
+            formdata.append('quantity',num[i].innerHTML);
+            formdata.append('price',onelist_price[i].innerHTML);
+            formdata.append('amount',total_price.innerHTML);
+            // formData.append(str(i),formdata);
+            formData.append("str",formdata);    
+        }
+        console.log(formData);
+        get_ajax("order.php",formData, false);
     }
 </script>
 </body>

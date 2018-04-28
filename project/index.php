@@ -83,7 +83,7 @@
             login.style.color="black";
         }
         $(".register_form_button").click(function(){
-            var code=$(".password_block").html();
+            var code=$(".password_block").text();
             var number=$(".code").val();
             var username=$(".username").val();
             var password=$(".password").val();
@@ -94,6 +94,8 @@
             if(number!=code){
                 alert("验证码不正确，请重新注册！");
                 $(".register_form_content").attr("action","");
+                console.log(number);
+                console.log(code);
             }
             else{
                 $(".register_form_content").attr("action","handle_register.php");
