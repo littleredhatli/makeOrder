@@ -76,7 +76,7 @@
                 <td><?php echo $search['name']; ?></td>
                 <td><?php echo $search['price'];?></td>
                 <td style="overflow: hidden;white-space: nowrap;text-overflow:ellipsis;"><?php echo $search['description'];?></td>
-                <td><img style="width: 4rem;height:4rem;" src="./images/<?php echo $search['icon'].'.png';?>"/></td>
+                <td><img style="width: 4rem;height:4rem;" src="<?=$search['icon'];?>"/></td>
                 <td><?php echo $search['category_name'];?></td>
                 <td>
                     <a class="btn btn-link" onclick="editPro(<?php echo $search['id'];?>)">修改</a>
@@ -87,11 +87,6 @@
             <?php  endforeach;?>
         </tbody>
     </table> 
-    <!-- <?php 
-        if($totalRows>$pageSize){
-            echo showPage($page, $totalPage,"keywords={$keywords}&order={$order}");   
-        }
-    ?> -->
 </div>
 <script type="text/javascript">
 function showDetail(id,t){

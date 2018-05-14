@@ -59,7 +59,7 @@
 	<tr>
         <td align="right"><span class="td-txt">商品图像</span></td>
         <td> 
-            <img style="margin:12px;width: 5rem;height: 5rem;" src="./images/<?php echo $search['icon'].'.png';?>"/>
+            <img style="margin:12px;width: 5rem;height: 5rem;" src="<?=$user['icon'];?>"/>
             <input class="btn btn-file" type="file" name="myFile"/>
         </td>
     </tr> 

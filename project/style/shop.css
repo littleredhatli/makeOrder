@@ -313,7 +313,12 @@ input::-webkit-input-placeholder {
     display: inline-block;
     width: 35%;
     height: 100%;
-    background-image: url("../img/menu1-1.png");
+    background-size: 100% 100%;
+}
+.menu_list1_content_img img{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
 }
 .menu_list1_name{

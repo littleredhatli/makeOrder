@@ -82,7 +82,7 @@
             <div class="menu_list1">
                 <?php foreach($showes as $key=>$show):?>
                 <div class="menu_list1_content each-<?=$show['id']?> first_view" id="<?php echo $show['id'];?>">
-                    <div class="menu_list1_content_img"></div>
+                    <div class="menu_list1_content_img"><img src="<?=$show['icon']?>"/></div>
                     <p class="menu_list1_name"><?php echo $show['name'];?></p>
                     <p class="menu_list1_description"><?php echo $show['description'];?></p>
                     <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $show['price'];?></span>
@@ -91,7 +91,7 @@
                 <?php  endforeach;?>
                 <?php foreach($searches as $key=>$search):?>
                 <div class="menu_list1_content each-<?=$search['id']?>" id="<?php echo $search['id'];?>" style="display: none;">
-                    <div class="menu_list1_content_img"></div>
+                    <div class="menu_list1_content_img"><img src='"./admin/"+"<?=$show['icon']?>"'/></div>
                     <p class="menu_list1_name"><?php echo $search['name'];?></p>
                     <p class="menu_list1_description"><?php echo $search['description'];?></p>
                     <span style="font-size: 14px;color: #F63440;line-height: 3.5rem;margin-left: 1rem;position: absolute;right: 4.5rem;bottom: -0.5rem;">￥</span><span class="menu_list1_price"><?php echo $search['price'];?></span>
