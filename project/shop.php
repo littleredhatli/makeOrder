@@ -169,7 +169,6 @@ window.onload=function(){
         var thisID=$(this).children(".category_index").html();
         data={id:thisID};
         post_ajax("handle_menu.php", data, sucess_function);                   
-        
     });
 
 

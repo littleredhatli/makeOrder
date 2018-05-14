@@ -1,0 +1,58 @@
+*{
+	margin:0;
+	padding:0;
+}
+html,body{
+	width: 100%;
+	height: 100%;
+}
+.header{
+	height: 3.5rem;
+	width: 100%;
+	background-color: #F63440;
+
+}
+.left_header{
+	display: inline-block;
+}
+.content_title{
+	color: white;
+	font-size: 19px;
+	line-height: 3.5rem;
+	letter-spacing: 3px;
+}
+.right_menu{
+	width: 22%;
+	height: 3.5rem;
+	display: inline-block;
+	float: right;
+}
+.user{
+	color: white;
+	font-size: 15px;
+	line-height: 3.5rem;
+	margin-right: 2rem;
+}
+.details,.logout{
+	text-decoration: none;
+	color: white;
+	font-size: 15px;
+	line-height: 3.5rem;
+}
+.details{
+	margin-right: 1.5rem;
+}
+.back{
+	height: 2.5rem;
+	width: 7rem;
+	background-color: #F63440;
+	color: white;
+	text-align: center;
+	border: none;
+	outline: none;
+	font-size: 15px;
+	border-radius: 4px;
+	margin-left: 1rem;
+	margin-top: 1rem;
+	cursor:pointer;
+}

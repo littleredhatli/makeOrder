@@ -49,6 +49,7 @@
     <script src="./ajax/Ajax.js"></script>
     <script src="./ajax/Json.js"></script>
     <script src="./js/json2.js"></script>
+    <script src="./js/cookie.js"></script>
     <title>某某餐饮有限公司</title>
 </head>
 <body>
@@ -140,7 +141,7 @@
 
 <script type="text/javascript">
 window.onload=function(){
-    var data;
+    var data,list;
     var Arrays=new Array();
     
 
@@ -315,9 +316,7 @@ window.onload=function(){
         }
         
     }
-    function makeorder(){   
-        var formData=new FormData();
-        var orderlist={};
+    function makeorder(){ 
         window.location="add_mess.php";
         var shopcar_onelist=document.getElementsByClassName("shopcar_onelist");
         var id=[];
@@ -329,17 +328,16 @@ window.onload=function(){
         var onelist_price=document.getElementsByClassName("onelist_price");
         var total_price=document.getElementsByClassName("total_price")[0];
         for(var i=0;i<shopcar_onelist.length;i++){
-            var formdata=new FormData();
-            formdata.append('pro_id',id[i]);
-            formdata.append('pro_name',onelist_name[i].innerHTML);
-            formdata.append('quantity',num[i].innerHTML);
-            formdata.append('price',onelist_price[i].innerHTML);
-            formdata.append('amount',total_price.innerHTML);
-            // formData.append(str(i),formdata);
-            formData.append("str",formdata);    
-        }
-        console.log(formData);
-        get_ajax("order.php",formData, false);
+            var order={"pro_id":id[i],"pro_name":onelist_name[i].innerHTML,"quantity":num[i].innerHTML,"price":onelist_price[i].innerHTML,"amount":total_price.innerHTML};
+            setCookie("pro_id["+i+"]",id[i], 0);
+            setCookie("pro_name["+i+"]",onelist_name[i].innerHTML, 0);
+            setCookie("quantity["+i+"]",num[i].innerHTML, 0);
+            setCookie("price["+i+"]",onelist_price[i].innerHTML, 0);
+            setCookie("amount["+i+"]",total_price.innerHTML, 0);
+        }/*
+        var length=shopcar_onelist.length;
+        list={len:length};
+        post_ajax("order.php",list,false);*/
     }
 </script>
 </body>

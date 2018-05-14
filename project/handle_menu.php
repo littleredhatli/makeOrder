@@ -6,7 +6,7 @@
     if (mysqli_connect_errno() !== 0) {
         die(mysqli_connect_error());
     }
-    mysqli_query($conn,"set names utf8");
+    mysqli_query($conn,"set names utf8");   
 
     $query1="select name from category where id='".$id."'";
     $arry1=mysqli_query($conn,$query1);

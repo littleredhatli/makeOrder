@@ -1,3 +1,8 @@
+<?php 
+session_start();
+$user=$_SESSION['user'];
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,8 +20,9 @@
     <i class="fa fa-cutlery" style="vertical-align:middle;color:white;font-size: 1.6rem;margin-left: 1.5rem;line-height: 4rem;margin-right: 0.3rem;"></i>
     <span class="header_title">某某餐饮有限公司</span>
     <div class="header_a">
-        <span class="welcome">欢迎您<span class="manager_name" style="margin-left: 0.5rem;">admin</span></span>
-        <span class="website">预览前台</span>
+        <span class="welcome">欢迎您<span class="manager_name" style="margin-left: 0.5rem;"><?=$user['name']?></span></span>
+        <a class="website" href="../shop_menu.php">预览前台</a>
+        <a class="logout" href="../logout.php">退出登录</a>
     </div>
 </div>
 <div class="content">
@@ -47,7 +53,7 @@
                 </div>
                 <dl id="menu3" style="display:none;">
                     <dd><a href="listOrder.php" target="mainFrame">订单列表</a></dd>
-                    <dd><a href="listOrder.php" target="mainFrame">订单查询</a></dd>
+                    <dd><a href="searchOrder.php" target="mainFrame">订单查询</a></dd>
                 </dl>
             </li>
             <li>

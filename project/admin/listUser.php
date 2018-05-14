@@ -6,7 +6,7 @@
     }
     mysqli_query($conn,"set names utf8");
 
-    $result=mysqli_query($conn,"select * from user");
+    $result=mysqli_query($conn,"select * from user where user_grant='用户'");
     $rows = [];
     while($row = mysqli_fetch_assoc($result)){
         $rows[] = $row;

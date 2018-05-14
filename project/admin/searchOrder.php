@@ -29,6 +29,9 @@
         <div class="fl"></div>
             <div class="fr"> 
                 <div class="text" style="margin-right: 3rem;">
+                    <span>
+                        <input type="text" value="" placeholder="搜索手机号" class="search form-control"  id="searchPhone" onkeypress="searchPhone()" >
+                    </span>
                 </div>
             </div>
     </div>
@@ -65,10 +68,16 @@
     </tbody>
     </table>
 </div>
-<script type="text/javascript">
-function orderDetail(val){
-    window.location="order_detail.php?id="+val;
-}
+<script type="text/javascript">  
+    function searchPhone(){
+        if(event.keyCode==13){
+            var val=document.getElementById("searchPhone").value;
+            window.location="searchOrder_phone.php?orderPhone="+val;
+        }
+    } 
+    function orderDetail(val){
+        window.location="order_detail.php?id="+val;
+    }
 </script>
 </body>
 </html>

@@ -33,7 +33,7 @@ html,body{
     font-size: 16px;
 }
 .welcome{
-    margin-right: 4rem;
+    margin-right: 2rem;
 }
 .content{
     width: 100%;
@@ -111,4 +111,11 @@ html,body{
     margin-top: 1rem;
     margin-left:2rem;
     height: 100%;
+}
+.website,.logout{
+    text-decoration: none;
+    color: white;
+}
+.website{
+    margin-right: 1.5rem;
 }
