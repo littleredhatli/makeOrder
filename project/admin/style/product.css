@@ -82,3 +82,20 @@ thead{
 	background-color: #F7F7F7;
 	border-bottom: 1px solid #EEEEEE;
 }
+.finish{
+	height: 3rem;
+	width: 10rem;
+	background-color: #4CACE2;
+	color: white;
+	border:none;
+	outline: none;
+	line-height: 3rem;
+	font-size: 16px;
+	border-radius: 4px;
+	margin-left: 1rem;
+}
+.file_des{
+	font-size: 12px;
+	margin-top: 1rem;
+	margin-left: 1rem;
+}

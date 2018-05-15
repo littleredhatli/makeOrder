@@ -1,6 +1,12 @@
 <?php 
 session_start();
 $user=$_SESSION['user'];
+if (!empty($_SESSION['user'])) {
+        $is_login = 1;
+    } else {
+        $is_login = 0;
+        die("请先登录！");
+    }
 ?>
 
 <!doctype html>
@@ -21,7 +27,7 @@ $user=$_SESSION['user'];
     <span class="header_title">某某餐饮有限公司</span>
     <div class="header_a">
         <span class="welcome">欢迎您<span class="manager_name" style="margin-left: 0.5rem;"><?=$user['name']?></span></span>
-        <a class="website" href="../shop_menu.php">预览前台</a>
+        <a class="website" href="shop_menu.php">预览前台</a>
         <a class="logout" href="../logout.php">退出登录</a>
     </div>
 </div>
@@ -53,6 +59,7 @@ $user=$_SESSION['user'];
                 </div>
                 <dl id="menu3" style="display:none;">
                     <dd><a href="listOrder.php" target="mainFrame">订单列表</a></dd>
+                    <dd><a href="listUnfinish.php" target="mainFrame">未接订单列表</a></dd>
                     <dd><a href="searchOrder.php" target="mainFrame">订单查询</a></dd>
                 </dl>
             </li>
@@ -70,18 +77,8 @@ $user=$_SESSION['user'];
                 </div>
                 <dl id="menu5" style="display:none;">
                     <dd><a href="listManager.php" target="mainFrame">我的资料</a></dd>
-                    <!-- <dd><a href="listAdmin.php" target="mainFrame">修改个人资料</a></dd> -->
                 </dl>
             </li>
-            <!--<li>
-                <div class="menu-item-title" onclick="show('menu6','change6')"><span  id="change6" class="menu-item-icon ico-close"></span>
-                    <span class="menu-item-name">接单管理</span>
-                </div>
-                <dl id="menu6" style="display:none;">
-                    <dd><a href="addAdmin.php" target="mainFrame">我的资料</a></dd>
-                    <dd><a href="listAdmin.php" target="mainFrame">修改个人资料</a></dd>
-                </dl>
-            </li>-->
         </ul>
     </div>
     <div class="main">

@@ -36,7 +36,7 @@ if (empty($user)) {
     $_SESSION['user'] = $user;
     ?>
         <script type="text/javascript">
-            window.location="shop_menu.php";
+            window.location="./admin/shop_menu.php";
         </script>
         <?php
 }

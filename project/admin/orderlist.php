@@ -21,8 +21,8 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="./style/header.css">
-    <link rel="stylesheet" type="text/css" href="./style/user.css">
+    <link rel="stylesheet" type="text/css" href="../style/header.css">
+    <link rel="stylesheet" type="text/css" href="../style/user.css">
 </head>
 <body>
     <div class="header">
@@ -59,7 +59,7 @@
                 <td><?php echo $search['product_name'];?></td>
                 <td><?php echo $search['product_price'];?></td>
                 <td><?php echo $search['product_quantity'];?></td>
-                <td><?php echo $search['product_icon'];?></td>
+                <td><div class="orderimg_block"><img class="order_img" src="<?=$search['product_icon']?>"/></div></td>
                 <td><?php echo $search['create_time'];?></td>
                 <td><?php echo $search['order_amount'];?></td>
             </tr>

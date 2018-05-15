@@ -1,8 +1,7 @@
 <?php
     session_start();
-    foreach ($_COOKIE as $key => $value) {
-        setcookie($key, null);
-    }
+    $length=$_SESSION['length'];
+
     $time=date("Y-m-d H:i:s");
     /*$order = json_decode($_POST['orderli'],true); */ 
     $pro_id=$_COOKIE['pro_id'];
@@ -13,11 +12,11 @@
     $user=$_SESSION['user'];
     /*$length = json_decode($_POST['len'],true);*/
     for($i=0;$i<sizeof($pro_id);$i++) {
-        setcookie("pro_id["+$i+"]", "", -1);
-        setcookie("pro_name["+$i+"]","", -1);
-        setcookie("quantity["+$i+"]","", -1);
-        setcookie("price["+$i+"]","", -1);
-        setcookie("amount["+$i+"]","", -1);
+        setcookie("pro_id["+$i+"]", "", time() - 3600);
+        setcookie("pro_name["+$i+"]","", time() - 3600);
+        setcookie("quantity["+$i+"]","", time() - 3600);
+        setcookie("price["+$i+"]","", time() - 3600);
+        setcookie("amount["+$i+"]","", time() - 3600);
     }
     header('Content-Type:text/html; charset=UTF-8');
     $conn = mysqli_connect('localhost', 'root' ,'' , 'makeorder');
@@ -34,8 +33,10 @@
 
     $query=mysqli_query($conn,"select order_id from orderlist where create_time=now()");
     $order_id= mysqli_fetch_assoc($query);
-    for($i=0;$i<sizeof($pro_id);$i++) {
-        $row="INSERT INTO order_detail(order_id, product_id, product_name, product_price, product_quantity, order_amount, product_icon, create_time) VALUES('".$order_id['order_id']."','".$pro_id[$i]."','".$pro_name[$i]."','".$price[$i]."','".$quantity[$i]."','".$amount[0]."','0',now())";
+    for($i=0;$i<$length;$i++) {
+        $result1=mysqli_query($conn,"select icon from product where id='".$pro_id[$i]."'");
+        $icon= mysqli_fetch_assoc($result1);
+        $row="INSERT INTO order_detail(order_id, product_id, product_name, product_price, product_quantity, order_amount, product_icon, create_time) VALUES('".$order_id['order_id']."','".$pro_id[$i]."','".$pro_name[$i]."','".$price[$i]."','".$quantity[$i]."','".$amount[0]."','".$icon['icon']."',now())";
         mysqli_query($conn,$row);
         if(mysqli_errno($conn)!==0){
             die(mysqli_error($conn));
@@ -49,5 +50,5 @@
     }
 ?>
 <script type="text/javascript">
-window.location="orderlist.php";
+window.location="./admin/orderlist.php";
 </script>

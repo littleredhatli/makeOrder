@@ -6,7 +6,7 @@
     }
     mysqli_query($conn,"set names utf8");
 
-    $result=mysqli_query($conn,"select * from orderlist");
+    $result=mysqli_query($conn,"select * from orderlist where order_status='0'");
     $rows = [];
     while($row = mysqli_fetch_assoc($result)){
         $rows[] = $row;
@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<span class="main-title">订单列表</span>
+<span class="main-title">未接订单列表</span>
 <div class="details">
     <div class="details_operation clearfix">
         <div class="fl"></div>

@@ -367,4 +367,5 @@ input::-webkit-input-placeholder {
     margin-left: 2rem;
     cursor: pointer;
     display: inline-block;
+    text-decoration: none;
 }

@@ -58,6 +58,7 @@
 		<td align="right"><span class="td-txt">商品图像</span></td>
 		<td> 
             <input class="btn btn-file" type="file" name="myFile"/>
+            <span class="file_des">(图片大小不能超过2M)</span>
 		</td>
 	</tr>
 </table>

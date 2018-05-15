@@ -36,7 +36,6 @@
 </div>
 
 <script src="scripts/jquery-1.8.3.js"></script>
-<script src="scripts/fileinput.min.js"></script>
 <script type="text/javascript">
  $(function(){ 
    $("#add_product").submit(function () {

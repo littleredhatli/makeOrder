@@ -61,7 +61,7 @@
             <td><?php echo $row['order_amount'];?></td>
             <td><?php echo $row['order_status']==1?"已接":"未接";?></td>
             <td><?php echo $row['create_time'];?></td>
-            <td align="center"><a class="btn btn-link"  onclick="orderDetail(<?=$row['order_id']?>)">查看详情</a>
+            <td align="center"><a class="btn btn-link"  onclick="orderDetail(<?=$row['order_id']?>,<?=$row['order_status']?>)">查看详情</a>
             </td>
         </tr>
         <?php  endforeach;?> 
@@ -75,9 +75,9 @@
             window.location="searchOrder_phone.php?orderPhone="+val;
         }
     } 
-    function orderDetail(val){
-    	window.location="order_detail.php?id="+val;
-	}
+    function orderDetail(val,status){
+        window.location="order_detail.php?id="+val+"&status="+status;
+    }
 </script>
 </body>
 </html>

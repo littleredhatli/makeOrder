@@ -6,7 +6,7 @@
     }
     mysqli_query($conn,"set names utf8");
 
-    $sql="select * from category order by weight asc";
+    $sql="select * from category order by weight desc";
     $result=mysqli_query($conn,$sql);
     $rows=[];
     while ($row=mysqli_fetch_assoc($result)) {
