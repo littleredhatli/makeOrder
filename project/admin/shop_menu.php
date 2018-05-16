@@ -6,6 +6,11 @@
         $is_login = 0;
         die("请先登录！");
     }
+    if ($_SESSION['user']['user_grant']=="用户") {
+        $is_user = 1;
+    } else {
+        $is_user = 0;
+    }
     header('Content-Type:text/html; charset=UTF-8');
     $conn = mysqli_connect('localhost', 'root' ,'' , 'makeorder');
     if (mysqli_connect_errno() !== 0) {
@@ -104,10 +109,14 @@
     </div>
     <div class="content_right">
         <div class="content_right_header">
-        <?php if($is_login):?>
+        <?php if($is_user):?>
             <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></span>
             <a class="right_details" href="../user.php">我的资料</a>
             <a class="logout" href="../logout.php">退出登录</a>
+        <?php endif?>
+        <?php if(!$is_user):?>
+            <span class="right_about">欢迎您,<?=$_SESSION['user']['name']?></span>
+            <a class="right_details" href="index.php">返回后台</a>
         <?php endif?>
         </div>
         <div class="content_right_content">
@@ -130,12 +139,19 @@
                     <div class="notempty_txt" style="display: none;">
                         <span class="total">总计： ￥</span>
                         <span class="total_price">0</span>
-                        <button class="calculate" onclick="makeorder()">结算</button>
+                        <button class="calculate" onclick="confirm()">结算</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="alert">
+    <img id="close" src="../img/icon_close.png">
+    <img id="logo" src="../img/favicon.ico">
+    <p class="alert_txt">将为您生成订单···</p>
+    <button class="makeorder" onclick="makeorder()">确定</button>
+    <button class="cancel" onclick="cancel()">取消</button>
 </div>
 
 
@@ -315,6 +331,18 @@ window.onload=function(){
             
         }
         
+    }
+    function confirm(){
+        var alert=document.getElementsByClassName("alert")[0];
+        alert.style.display="block";
+        var alert_close = document.getElementById("close");
+        alert_close.onclick = function () {
+            alert.style.display = "none";
+        }
+    }
+    function cancel(){
+        var alert=document.getElementsByClassName("alert")[0];
+        alert.style.display="none";
     }
     function makeorder(){ 
         var shopcar_onelist=document.getElementsByClassName("shopcar_onelist");

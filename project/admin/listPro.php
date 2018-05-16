@@ -34,7 +34,7 @@
 <body>
  
 <span class="main-title">商品列表</span>
-<div class="details">
+<div class="details" style="margin-bottom: 8rem;">
     <div class="details_operation clearfix">
         <div class="bui_select">
             <input class="btn btn-primary" type="button" value="添加商品" class="d" onclick="addPro()" style="display: inline-block;margin-top: 1.5rem;">

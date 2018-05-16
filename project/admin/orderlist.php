@@ -37,18 +37,18 @@
         </div>
     </div>
     <div class="content">
-        <span class="main-title">您添加的账单的如下：</span>
-        <table class="table  table-hover">
+        <span class="main-title" style="border: none;font-size: 18px;">您已成功成功提交订单，请耐心等待商家配送</span>
+        <span class="main-title" style="font-size: 16px;color: #F63440;">您的订单的如下：</span>
+        <table class="table  table-hover" style="margin-left: 1rem;">
         <thead>
             <tr>
-                <th width="5%">订单编号</th>
-                <th width="5%">商品编号</th> 
+                <th width="6%">订单编号</th>
+                <th width="6%">商品编号</th> 
                 <th width="10%">商品名称</th>
-                <th width="10%">商品单价</th>
                 <th width="15%">下单数量</th>
+                <th width="10%">商品总价</th>
                 <th width="15%">商品图标</th>
                 <th width="15%">下单时间</th>
-                <th width="8%">订单总金额</th>
             </tr>
         </thead>
         <tbody>
@@ -57,16 +57,16 @@
                 <td><?php echo $search['order_id'];?></td> 
                 <td><?php echo $search['product_id'];?></td> 
                 <td><?php echo $search['product_name'];?></td>
-                <td><?php echo $search['product_price'];?></td>
                 <td><?php echo $search['product_quantity'];?></td>
+                <td><?php echo $search['product_price'];?></td>
                 <td><div class="orderimg_block"><img class="order_img" src="<?=$search['product_icon']?>"/></div></td>
                 <td><?php echo $search['create_time'];?></td>
-                <td><?php echo $search['order_amount'];?></td>
             </tr>
             <?php  endforeach;?> 
         </tbody>
         </table>
-        <button class="back" onclick="back()">完成返回首页</button>
+        <span class="main-title" style="display: inline-block;margin-bottom: 2rem;margin-left: 2rem;">订单总金额：<?php echo $search['order_amount'];?></span>
+        <button class="back" onclick="back()" style="margin-bottom: 2rem;">返回首页</button>
     </div>
     <script type="text/javascript">
 		function back(){
