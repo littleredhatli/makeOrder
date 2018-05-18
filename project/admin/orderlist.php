@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="content">
-        <span class="main-title" style="border: none;font-size: 18px;">您已成功成功提交订单，请耐心等待商家配送</span>
+        <span class="main-title" style="border: none;font-size: 18px;">您已成功提交订单，请耐心等待商家配送</span>
         <span class="main-title" style="font-size: 16px;color: #F63440;">您的订单的如下：</span>
         <table class="table  table-hover" style="margin-left: 1rem;">
         <thead>
@@ -65,7 +65,7 @@
             <?php  endforeach;?> 
         </tbody>
         </table>
-        <span class="main-title" style="display: inline-block;margin-bottom: 2rem;margin-left: 2rem;">订单总金额：<?php echo $search['order_amount'];?></span>
+        <span class="main-title user_order" style="display: inline-block;margin-bottom: 2rem;margin-left: 2rem;margin-top: 2rem;"><span>用户：<?php echo $user['name'];?></span><span>手机号：<?php echo $user['phone'];?></span><span>地址：<?php echo $user['address'];?></span><span class="order_amount">订单总金额：<?php echo $search['order_amount'];?></span></span>
         <button class="back" onclick="back()" style="margin-bottom: 2rem;">返回首页</button>
     </div>
     <script type="text/javascript">

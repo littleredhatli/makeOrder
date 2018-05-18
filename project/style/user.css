@@ -61,3 +61,11 @@ select{
 	height: 100%;
 	vertical-align: middle;
 }
+.user_order span{
+	display: inline-block;
+	margin-right: 6rem;
+}
+.order_amount{
+	position: absolute;
+	right: 0;
+}
