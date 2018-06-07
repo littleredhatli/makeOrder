@@ -45,7 +45,7 @@
                 <td><?php echo $row['phone'];?></td>
                 <td><?php echo $row['address'];?></td>
                 <td><?php echo $row['sex'];?></td>           
-                <td align="center"><a class="btn btn-link" onclick="">查看详细信息</a></td>
+                <td align="center"><a class="btn btn-link" onclick="detail(<?=$row['id']?>)">查看详细信息</a></td>
             </tr>
         <?php endforeach;?>
         </tbody>
@@ -57,13 +57,13 @@
 	function addUser(){
 		window.location="addUser.php";	
 	}
-	function limitUser(id){
-			
-	}
 	function delUser(username){
 			if(window.confirm("确认删除？")){
 				window.location="doAdminAction.php?act=delUser&username="+username;
 			}
 	}
+    function detail(userid){
+        window.location="userDetail.php?id="+userid;
+    }
 </script>
 </html>
